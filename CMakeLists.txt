@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 2.8)
 project(objectGesture)
 set(CMAKE_CXX_FLAGS "-std=c++0x")
+#set(CMAKE_SYSROOT "/home/frano/nao/devtools/linux64-nao-atom-cross-toolchain-1.14.5/sysroot/")
 include_directories("include")
 
 find_package(qibuild)
@@ -42,7 +43,7 @@ if(TESTMODE)
     qi_stage_lib(ImageAcquisition)
 
     qi_create_bin(nao-object-gesture src/main.cpp)
-    qi_use_lib(nao-object-gesture ImgProcPipeline ObjectTracking DisplayWindow ImageAcquisition GestureRecognition ALCOMMON ALVISION ALPROXIES ALERROR)
+    qi_use_lib(nao-object-gesture ImgProcPipeline ObjectTracking DisplayWindow ImageAcquisition GestureRecognition ALCOMMON ALVISION ALPROXIES ALERROR PTHREAD)
 
 else()
     qi_create_lib(nao-object-gesture SHARED src/naoqi_module_loader.cpp SUBFOLDER naoqi)
