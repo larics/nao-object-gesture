@@ -12,6 +12,7 @@ using namespace std;
 
 
 
+
 /*Input numerator coefficients in standard MATLAB format  */
 LTIFilter::LTIFilter(){
     discretizationTime = 1;

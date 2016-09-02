@@ -1,6 +1,7 @@
 #ifndef GESTURERECOGNITION
 #define GESTURERECOGNITION
 
+
 #include "opencv2/imgproc/imgproc.hpp"
 #include "boost/smart_ptr.hpp"
 #include "boost/filesystem.hpp"

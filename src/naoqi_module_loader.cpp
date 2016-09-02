@@ -4,6 +4,9 @@
 # include <signal.h>
 #endif
 
+#define BOOST_NO_DEFAULTED_FUNCTIONS
+#define BOOST_NO_DELETED_FUNCTIONS
+
 #include <boost/shared_ptr.hpp>
 #include <alcommon/albroker.h>
 #include <alcommon/albrokermanager.h>
