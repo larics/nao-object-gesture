@@ -796,7 +796,7 @@ void NAOEvent::deadNotify(boost::shared_ptr<AL::ALMemoryProxy> memoryProxy, vect
 
 void NAOEvent::log(vector<Gesture> gestures)
 {
-    boost::filesystem3::path tpath("/home/nao/LogTrajectory");
+    boost::filesystem::path tpath("/home/nao/LogTrajectory");
     std::string tname = name;
     time_t rawtime;
     struct tm * timeinfo;
