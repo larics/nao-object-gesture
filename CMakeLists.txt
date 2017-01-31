@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8)
 project(objectGesture)
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
-#set(CMAKE_CXX_FLAGS "-std=c++0x")
+set(CMAKE_CXX_FLAGS -DBOOST_SIGNALS_NO_DEPRECATION_WARNING )
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++0x")
 include_directories("include")
 
 find_package(qibuild)
@@ -29,34 +29,24 @@ qi_create_lib(ObjectTracking STATIC SRC include/ObjectTracking.hpp src/ObjectTra
 qi_use_lib(ObjectTracking BOOST BOOST_FILESYSTEM OPENCV2_CORE OPENCV2_HIGHGUI OPENCV2_IMGPROC OPENCV2_VIDEO ImgProcPipeline GestureRecognition)
 qi_stage_lib(ObjectTracking)
 
-#qi_create_lib(ModuleImpl STATIC include/NAOObjectGesture.h src/NAOObjectGesture.cpp)
-#qi_use_lib(ModuleImpl ALCOMMON ALVISION ALPROXIES ALERROR BOOST BOOST_THREAD BOOST_FILESYSTEM BOOST_DATE_TIME OPENCV2_CORE OPENCV2_HIGHGUI ImgProcPipeline ObjectTracking)
-#qi_stage_lib(ModuleImpl)
+qi_create_lib(ModuleImpl STATIC include/NAOObjectGesture.h src/NAOObjectGesture.cpp)
+qi_use_lib(ModuleImpl ALCOMMON ALVISION ALPROXIES ALERROR BOOST BOOST_THREAD BOOST_FILESYSTEM BOOST_DATE_TIME OPENCV2_CORE OPENCV2_HIGHGUI ImgProcPipeline ObjectTracking)
+qi_stage_lib(ModuleImpl)
 
-set(_srcsModule
-    src/naoqi_module_loader.cpp
-    include/NAOObjectGesture.h
-    src/NAOObjectGesture.cpp
-)
+if(TESTMODE)
+    qi_create_lib(DisplayWindow STATIC SRC include/DisplayWindow.hpp src/DisplayWindow.cpp)
+    qi_use_lib(DisplayWindow BOOST BOOST_FILESYSTEM BOOST_THREAD OPENCV2_CORE OPENCV2_HIGHGUI ImgProcPipeline ObjectTracking)
+    qi_stage_lib(DisplayWindow)
 
-qi_create_lib(nao-object-gesture SHARED ${_srcsModule})
-qi_use_lib(nao-object-gesture ImgProcPipeline ObjectTracking)
+    qi_create_lib(ImageAcquisition STATIC SRC include/ImageAcquisition.h src/ImageAcquisition.cpp)
+    qi_use_lib(ImageAcquisition BOOST BOOST_FILESYSTEM OPENCV2_CORE OPENCV2_HIGHGUI OPENCV2_IMGPROC ALCOMMON ALVISION ALPROXIES)
+    qi_stage_lib(ImageAcquisition)
 
-#if(TESTMODE)
-#    qi_create_lib(DisplayWindow STATIC SRC include/DisplayWindow.hpp src/DisplayWindow.cpp)
-#    qi_use_lib(DisplayWindow BOOST BOOST_FILESYSTEM BOOST_THREAD OPENCV2_CORE OPENCV2_HIGHGUI ImgProcPipeline ObjectTracking)
-#    qi_stage_lib(DisplayWindow)
-#
-#    qi_create_lib(ImageAcquisition STATIC SRC include/ImageAcquisition.h src/ImageAcquisition.cpp)
-#    qi_use_lib(ImageAcquisition BOOST BOOST_FILESYSTEM OPENCV2_CORE OPENCV2_HIGHGUI OPENCV2_IMGPROC ALCOMMON ALVISION ALPROXIES)
-#    qi_stage_lib(ImageAcquisition)
-#
-#    qi_create_bin(nao-object-gesture src/main.cpp)
-#    qi_use_lib(nao-object-gesture ImgProcPipeline ObjectTracking DisplayWindow ImageAcquisition GestureRecognition ALCOMMON ALVISION ALPROXIES ALERROR)
-#
-#else()
-#    qi_create_lib(nao-object-gesture SHARED src/naoqi_module_loader.cpp SUBFOLDER naoqi)
-#    qi_use_lib(nao-object-gesture ImgProcPipeline ObjectTracking ALCOMMON ALERROR )
-#endif()
+    qi_create_bin(nao-object-gesture src/main.cpp)
+    qi_use_lib(nao-object-gesture ImgProcPipeline ObjectTracking DisplayWindow ImageAcquisition GestureRecognition ALCOMMON ALVISION ALPROXIES ALERROR)
 
-#ImgProcPipeline GestureRecognition ObjectTracking ModuleImpl BOOST ALCOMMON ALVISION ALPROXIES 
+else()
+    qi_create_lib(nao-object-gesture SHARED src/naoqi_module_loader.cpp SUBFOLDER naoqi)
+    qi_use_lib(nao-object-gesture ImgProcPipeline ObjectTracking ModuleImpl BOOST ALCOMMON ALVISION ALPROXIES ALERROR)
+endif()
+

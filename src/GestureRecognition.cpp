@@ -150,9 +150,9 @@ void Trajectory::logTo(boost::filesystem::path filePath){
     }
     if (!filePath.empty()){
         if (exists(filePath)){
-            boost::filesystem3::remove(filePath);
+            boost::filesystem::remove(filePath);
         }
-        boost::filesystem3::create_directories(filePath.parent_path());
+        boost::filesystem::create_directories(filePath.parent_path());
         boost::filesystem::ofstream fileStream(filePath, ios::out | ios::app);
         for (int i=0; i<points.size(); i++){
             fileStream << times[i] << ", " << points[i].x << ", " << points[i].y << ", " << rawPoints[i].x << ", " << rawPoints[i].y << endl;
@@ -171,9 +171,9 @@ void Trajectory::logTo(boost::filesystem::path filePath, vector<Gesture> gesture
     }
     if (!filePath.empty()){
         if (exists(filePath)){
-            boost::filesystem3::remove(filePath);
+            boost::filesystem::remove(filePath);
         }
-        boost::filesystem3::create_directories(filePath.parent_path());
+        boost::filesystem::create_directories(filePath.parent_path());
         boost::filesystem::ofstream fileStream(filePath, ios::out | ios::app);
         for (int i=0; i<points.size(); i++){
             fileStream << times[i] << ", " << points[i].x << ", " << points[i].y << ", " << rawPoints[i].x << ", " << rawPoints[i].y << endl;
