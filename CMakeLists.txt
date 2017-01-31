@@ -10,7 +10,7 @@ find_package(BOOST)
 
 option(TESTMODE
     "Program is compiled for local testing with visual output to screen "
-    OFF)
+    ON)
 if(TESTMODE)
     ADD_DEFINITIONS("-DTESTMODE")
 endif()
@@ -47,6 +47,6 @@ if(TESTMODE)
 
 else()
     qi_create_lib(nao-object-gesture SHARED src/naoqi_module_loader.cpp SUBFOLDER naoqi)
-    qi_use_lib(nao-object-gesture ImgProcPipeline ObjectTracking ModuleImpl BOOST ALCOMMON ALVISION ALPROXIES ALERROR)
+    qi_use_lib(nao-object-gesture ImgProcPipeline ObjectTracking ModuleImpl BOOST OPENCV2_CORE OPENCV2_HIGHGUI OPENCV2_IMGPROC OPENCV2_VIDEO ALCOMMON ALVISION ALPROXIES ALERROR)
 endif()
 
