@@ -106,7 +106,7 @@ int main(void)
     SimpleBlobDetect sbd;
     generalPtr = static_cast<ProcessingElement*>(&sbd);
     pipeline.push_back(generalPtr);
-    
+
     ObjectTracker objtrack;
     generalPtr = static_cast<ProcessingElement*>(&objtrack);
     pipeline.push_back(generalPtr);
@@ -116,7 +116,9 @@ int main(void)
     path gTruthDir = rootdir/"GroundTruth";
     vector<Mat> images;
     vector<Mat> masks;
+
     if (exists(dataDir) && exists(gTruthDir) && is_directory(dataDir) && is_directory(gTruthDir)){
+
         directory_iterator end_itr;
         for(directory_iterator itr(dataDir); itr!=end_itr; ++itr){
             path filename = itr->path().stem();
@@ -151,7 +153,7 @@ int main(void)
     pipelineIdVector.push_back(temp);
     
     String windowname="Color Histogram Backpropagation";
-    DisplayWindow window(windowname, pipeline,pipelineIdVector);
+    DisplayWindow window(windowname, pipeline, pipelineIdVector);
 
     if (!usingCamera){
         window.setImageFolder(imgseq);
@@ -165,7 +167,8 @@ int main(void)
         }
     }
 
-
-    delete capture;
+    if(usingCamera) {
+        delete capture;
+    }
 	return 0;
 }

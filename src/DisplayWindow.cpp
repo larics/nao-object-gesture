@@ -30,7 +30,7 @@ DisplayWindow::DisplayWindow(String name){
     dragging = false;
     clickTime = std::chrono::system_clock::now();
     mode=0;
-    namedWindow(name);
+    namedWindow(name, CV_WINDOW_NORMAL);
     setMouseCallback(name, staticMouseCallback, this);
     running = true;
     t = new boost::thread(boost::ref(*this));
@@ -49,7 +49,7 @@ DisplayWindow::DisplayWindow(std::string name, std::vector<ProcessingElement*> p
     pipelineVector = pipelineVec;
     clickTime = std::chrono::system_clock::now();
     mode=0;
-    namedWindow(name);
+    namedWindow(name,CV_WINDOW_NORMAL);
     setMouseCallback(name, staticMouseCallback, this);
     running = true;
     t = new boost::thread(boost::ref(*this));
@@ -209,6 +209,7 @@ bool DisplayWindow::nextImage()
             filename = itr->path();
         }
     }
+    std::cout << "Filename " << filename << std::endl;
     if (itr==end_itr){
         return false;
     }
